@@ -4,6 +4,7 @@
   "description": "Stage 1 Structuring",
   "main": "server.js",
   "scripts": {
+    "client":"npm start --prefix frontend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
