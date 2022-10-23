@@ -188,7 +188,6 @@ function PaperItem(
                     </div>
                 </div>
         </div>   
-        {/* <div className='divide-y-2 divide-white'></div> */}
     </div>
   )
 }

@@ -13,7 +13,7 @@ function PaperResults() {
   const handleNextPage = async (e) => {
     const nextOffset = offset + (next - offset)
     const nextItemIndex = itemIndex + (next - offset)
-    console.log(`nextOffset -> ${nextOffset}, nextItemIndex -> ${nextItemIndex}`)
+    // console.log(`nextOffset -> ${nextOffset}, nextItemIndex -> ${nextItemIndex}`)
     const papers = await searchPapers(query, FOSFilter, yearRange, sort, nextOffset, limit, nextItemIndex)
     dispatch({type:'GET_PAPERS', payload: papers})
 
@@ -24,7 +24,7 @@ function PaperResults() {
     const previousOffset = offset - (next - offset)
     const previousItemIndex = itemIndex - (next - offset)
 
-    console.log(`previousOffset -> ${previousOffset}, previousItemIndex -> ${previousItemIndex}`)
+    // console.log(`previousOffset -> ${previousOffset}, previousItemIndex -> ${previousItemIndex}`)
     const papers = await searchPapers(query, FOSFilter, yearRange, sort, 
     previousOffset, limit, previousItemIndex)
     dispatch({type:'GET_PAPERS', payload: papers})
