@@ -9,7 +9,7 @@ function Bucket() {
     const {bucketItems, dispatch} = useContext(SemanticscholarContext)
 
     const exportExcel = async () => {
-        let item = {title:'', authors:'', journalName:'', journalVolume:'', journalPages:'', publicationDate:'', search:'', abstractCHT: '', abstract:'',
+        let item = {title:'', authors:'', journalName:'', journalVolume:'', publicationDate:'', journalPages:'',  search:'', abstractCHT: '', abstract:'',
         url:''}
     
         let contentArray = []
