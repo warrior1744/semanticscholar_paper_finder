@@ -5,7 +5,6 @@ import { searchPapers } from '../../context/semanticscholar/SemanticsholarAction
 import AlertContext from '../../context/alert/AlertContext'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
-import Spinner from '../layout/Spinner'
 
 function PaperSearch() {
 

@@ -144,15 +144,21 @@ Details about a paper (Testing Stage)
 57. Paper.jsx -> create SemanticscholarContext and useEffect
 58. create getPaperDetail fetch API and dispatch to the reducer
 
-Material UI
+Material UI (Slider Component) and the Slider
 
-59. npm install
-
-PaperSearch: Range Slider For Date
-
-59.
+59. npm install @mui/material @emotion/react @emotion/styled
+60. PaperSearch.jsx -> import Slider
+61. create useState for dateRange and setDateRange
+62. create a Slider in a dropdown menu and handleDateRangeOnChange function
+63. in handleSubmit function, bring in the state of searchPapers API calls
 
 PaperSearch: Pagination For Papers
+
+64. PaperResults.jsx -> bring in offset, next, itemIndex and other
+    query fields for pagination data
+65. create two buttons and two functions
+    handlePreviousPage and handleNextPage
+66. each functions have their own API calls and then dispach the data to papers state
 
 PaperSearch: Limitation For Paper items
 
