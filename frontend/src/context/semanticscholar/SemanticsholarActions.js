@@ -24,6 +24,8 @@ export const searchPapers = async (text, FOSFilter ='', yearRange, sort='relevan
     data['sort'] = sort
     data['itemIndex'] = itemIndex 
 
+    console.log(data)
+
     return data
 }
 

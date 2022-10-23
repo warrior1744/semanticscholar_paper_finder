@@ -70,8 +70,8 @@ function Bucket() {
                 </div>          
                 {
                     bucketItems.map((paper, index) => (
-                    <>
-                        <ul key={paper}>
+                    <div key={paper.paperId}>
+                        <ul>
                             <li>篇名：{paper.title}</li>
                             <li>作者：{
                                 authorsToString(paper.authors)
@@ -86,7 +86,7 @@ function Bucket() {
                             <li>資源連結：{paper.url}</li>
                             <br />
                         </ul>
-                    </>
+                    </div>
                     ))
                 }
             </div> ) : (
