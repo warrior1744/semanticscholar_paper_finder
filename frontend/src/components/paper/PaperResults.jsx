@@ -21,7 +21,7 @@ function PaperResults() {
   // fetch the previous page of data
   const handlePreviousPage = async (e) => {
     const previousOffset = offset - (next - offset)
-    const previousItemIndex = itemIndex - (next - offset)
+    const previousItemIndex = itemIndex - (next - itemIndex)
     const papers = await searchPapers(query, FOSFilter, yearRange, sort, 
     previousOffset, limit, previousItemIndex)
     dispatch({type:'GET_PAPERS', payload: papers})
