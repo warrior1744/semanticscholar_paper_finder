@@ -60,19 +60,33 @@ function Paper() {
 
             { (paper && Object.keys(paper).length !==0) && (
               <div>
-              <h3 className='mb-2 text-2xl font-bold'>{title}</h3>
-              <div className='font-thin mb-3 italic'>
+              {title &&
+                <h3 className='mb-2 text-2xl font-bold'>{title}</h3>
+              }
+              {authors &&
+                <div className='font-thin mb-3 italic'>
                   <p>{authorsToString(authors)}</p>
-              </div>
+                </div>
+              }
+
               <div className='flex flex-row flex-nowrap text-sm font-bold mb-3'>
-                  <p>Published {publicationDate},</p>
-                  <p>{fieldsOfStudy.toString()}</p>
-                  <p>{journal.name}</p>
+                  {publicationDate &&
+                    <p>Published {publicationDate},</p>
+                  }
+                  {fieldsOfStudy && 
+                    <p>{fieldsOfStudy.toString()}</p>
+                  }
+                  {journal &&
+                    (journal.name && 
+                      <p>{journal.name}</p>
+                    )
+                  }
               </div>
-              <p>{abstract}</p>
+                {abstract && 
+                  <p>{abstract}</p>
+                }
               </div>
             )}
-            
           </>
     }
 }
