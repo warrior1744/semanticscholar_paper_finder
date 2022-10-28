@@ -257,10 +257,11 @@ Backend : Custom Error Handling (Send error as JSON format)
 Frontend: Working with backend server \*\*\* (Experimental)
 
 121. open package.json file -> add "proxy": "http://127.0.0.1:5000",
-122. Bucket.jsx -> import getAllPapers from SemanticsholarActions
-123. Bucket.jsx -> import removeAllPapers, create removeAllPapersHandler
-124. PaperItem.jsx ->
-125. PaperItem.jsx ->
+122. PaperSearch.jsx -> import getAllPapers from bucketActions,
+     import BucketContext, work with getAllPapers API on useEffect
+123. PaperItem.jsx -> import addPaper, removePaper from bucketActions,
+     import BucketContext, work with addPaper and removePaper on a new handler
+124. Bucket.jsx -> import getAllPapers
 
 Backend: User Authentication
 
