@@ -6,6 +6,10 @@ export const semanticscholarReducer = (state , action) => {
                 ...state,
                 loading: true
             }
+        case 'FAIL_LOADING' :
+            return {
+                loading: false, error: action.payload
+            }                
         case 'SET_SEARCH':
             return {
                 ...state,
@@ -38,30 +42,6 @@ export const semanticscholarReducer = (state , action) => {
                 ...state,
                 paper: {},
             }
-        case 'BUCKET_ADD_ITEM':
-            const paperItem = action.payload
-            const existPaperItem = state.bucketItems.find((item) => item.paperId === paperItem.paperId)
-            if(existPaperItem){
-                return {
-                    ...state,
-                    bucketItems: state.bucketItems.map((item) => item.paperId === existPaperItem.paperId ? paperItem: item)
-                }
-            }else{ //Merge Array
-                return {
-                    ...state,
-                    bucketItems: [...state.bucketItems, paperItem]
-                }
-            }
-        case 'BUCKET_REMOVE_ITEM':
-            return {
-                ...state,
-                bucketItems: state.bucketItems.filter(item => item.paperId !== action.payload.paperId) //payload is paper object
-            }
-        case 'BUCKET_EMPTY_ITEM':
-            return {
-                ...state,
-                bucketItems: []
-            }                    
         default:
             return state
      }

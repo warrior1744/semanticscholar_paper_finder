@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from 'react'
+import {useContext} from 'react'
 import Spinner from '../layout/Spinner'
 import PaperItem from './PaperItem'
 import SemanticscholarContext from '../../context/semanticscholar/SemanticsholarContext'
@@ -7,39 +7,30 @@ import { searchPapers } from '../../context/semanticscholar/SemanticsholarAction
 function PaperResults() {
 
   const { papers, loading, dispatch} = useContext(SemanticscholarContext)
-  const { data, offset, next, FOSFilter, query, sort, yearRange, itemIndex, limit} = papers
+  const { data, offset, next, FOSFilter, query, sort, yearRange, limit} = papers
 
   // fetch the next page of data
   const handleNextPage = async (e) => {
     const nextOffset = offset + (next - offset)
-    const nextItemIndex = itemIndex + (next - offset)
-    // console.log(`nextOffset -> ${nextOffset}, nextItemIndex -> ${nextItemIndex}`)
-    const papers = await searchPapers(query, FOSFilter, yearRange, sort, nextOffset, limit, nextItemIndex)
-    dispatch({type:'GET_PAPERS', payload: papers})
-
+    await searchPapers(query, FOSFilter, yearRange, sort, nextOffset, limit, dispatch)
   }
 
   // fetch the previous page of data
   const handlePreviousPage = async (e) => {
-    const previousOffset = offset - (next - offset)
-    const previousItemIndex = itemIndex - (next - offset)
-
-    // console.log(`previousOffset -> ${previousOffset}, previousItemIndex -> ${previousItemIndex}`)
-    const papers = await searchPapers(query, FOSFilter, yearRange, sort, 
-    previousOffset, limit, previousItemIndex)
-    dispatch({type:'GET_PAPERS', payload: papers})
+    const previousOffset = offset - (next - offset + (limit - (next-offset)))
+    await searchPapers(query, FOSFilter, yearRange, sort, 
+    previousOffset, limit, dispatch)
   }
 
   if(!loading){
     return (
-      <div>
+      <div className='relative'>
       <div className='grid grid-cols-1 divide-y-2 divide-current'>
         {data.map((paper, index) => (
           <PaperItem key={paper.paperId}
                      paper={paper}
                      index={index}
-                     itemIndex={index+itemIndex}
-                    //  handleAddOnChange={handleAddOnChange}
+                     itemIndex={index+offset}
                      />
         ))}
       </div>

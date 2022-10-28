@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 const SEMANTIC_URL = process.env.REACT_APP_SEMANTIC_URL
 const SEMANTIC_KEY = process.env.REACT_APP_SEMANTIC_KEY
 
@@ -9,30 +8,56 @@ const semanticscholar = axios.create({
     headers: {'x-api-key':SEMANTIC_KEY}
 })
 //https://api.semanticscholar.org/graph/v1/paper/search
-export const searchPapers = async (text, FOSFilter ='', yearRange, sort='relevance', offset= 0, limit=100, itemIndex=0) => {
 
-    const params = new URLSearchParams({query: text})
+export const searchPapers = async (text, FOSFilter ='', yearRange, sort, offset= 0, limit=100, dispatch) => {
 
-    const { data } = await semanticscholar.get(`/paper/search?${params}&offset=${offset}&limit=${limit}&fields=title,authors,venue,publicationDate,publicationTypes,year,journal,s2FieldsOfStudy,fieldsOfStudy,abstract,url&fieldsOfStudy=${FOSFilter}&year=${yearRange}&sort=${sort}`)
+    try{
+        dispatch({type:'SET_LOADING'})
+        const encodedText = encodeURI(text)
 
-    //save the searching params and parameters to the object
-    data['query'] = text
-    data['offset'] = offset
-    data['limit'] = limit
-    data['FOSFilter'] = FOSFilter
-    data['yearRange'] = yearRange
-    data['sort'] = sort
-    data['itemIndex'] = itemIndex 
+        // const params = new URLSearchParams({query: text})
 
-    console.log(data)
+         console.log(encodedText)
+        const qString = `/paper/search?query=${encodedText}&offset=${offset}&limit=${limit}&fields=title,authors,venue,publicationDate,publicationTypes,year,journal,s2FieldsOfStudy,fieldsOfStudy,abstract,url&fieldsOfStudy=${FOSFilter}&year=${yearRange}&sort=${sort}`
+        console.log(qString)
 
-    return data
+        const { data } = await semanticscholar.get(`/paper/search?query=${encodedText}&offset=${offset}&limit=${limit}&fields=title,authors,venue,publicationDate,publicationTypes,year,journal,s2FieldsOfStudy,fieldsOfStudy,abstract,url&fieldsOfStudy=${FOSFilter}&year=${yearRange}&sort=${sort}`)
+    
+        //save the searching params and parameters to the object
+        data['query'] = text
+        data['offset'] = offset
+        data['limit'] = limit
+        data['FOSFilter'] = FOSFilter
+        data['yearRange'] = yearRange
+        data['sort'] = sort
+        console.log(data)
+        dispatch({type:'GET_PAPERS', payload: data})
+    }catch (error){
+        dispatch({
+            type:'FAIL_LOADING',
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message 
+                    : error.message})
+    }
 }
 
-export const getPaperDetail = async (id) => {
+export const getPaperDetail = async (id, dispatch) => {
 
-    const {data} = await semanticscholar.get(`/paper/${id}?fields=title,authors,venue,publicationDate,publicationTypes,year,journal,fieldsOfStudy,s2FieldsOfStudy,abstract,url,year,citations,references`)
-
-    return data
+    try{
+        dispatch({type:'SET_LOADING'})
+        const {data} = await semanticscholar.get(`/paper/${id}?fields=title,authors,venue,publicationDate,publicationTypes,year,journal,fieldsOfStudy,s2FieldsOfStudy,abstract,url,year,citations,references`)
+        dispatch({type: 'GET_PAPER', payload: data})
+    }catch (error){
+        dispatch({
+            type:'FAIL_LOADING',
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message 
+                    : error.message})
+    }
 }
+
+
+
 

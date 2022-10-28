@@ -2,9 +2,12 @@
 import { useState, useContext, useEffect } from 'react'
 import SemanticscholarContext from '../../context/semanticscholar/SemanticsholarContext'
 import { searchPapers } from '../../context/semanticscholar/SemanticsholarActions'
+import { getAllPapers } from '../../context/bucket/bucketActions'
 import AlertContext from '../../context/alert/AlertContext'
+import { setSearchAlert } from '../../context/alert/AlertActions'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
+import BucketContext from '../../context/bucket/bucketContext'
 
 function PaperSearch() {
 
@@ -46,19 +49,25 @@ function PaperSearch() {
   const [FOSCheckedState, setFOSCheckedState] = useState(
     new Array(fieldsOfStudy.length).fill(false)
   )  //initial state = [false, false, false, false, ...]
-  const [sort, setSort] = useState()
+  const [sort, setSort] = useState('relevance')
   const [FOSFilter, setFOSFilter] = useState('')
   const [dateRange, setDateRange] = useState([lastTenYears, year])
   const [limit, setLimit] = useState(100)
 
   const {papers, dispatch, loading} = useContext(SemanticscholarContext)
-  const {setAlert} = useContext(AlertContext)
+  const {dispatchAlert} = useContext(AlertContext)
+  const {bucketDispatch} = useContext(BucketContext)
   const { data } = papers
 
 
   useEffect(() => {
     const relevance = document.getElementById('relevance')
     relevance.checked = true
+
+    const getPapers = async () => {
+      await getAllPapers(bucketDispatch)
+  }
+  getPapers()
   },[])
 
   const handleDateRangeOnChange = (event, newDateRange) => {
@@ -94,11 +103,10 @@ function PaperSearch() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if(text === ''){
-      setAlert('Please enter something', 'error')
+      setSearchAlert('Please enter something', 'error', dispatchAlert)
     }else{
       dispatch({type:'SET_SEARCH', payload: text})
-      dispatch({type:'SET_LOADING'})
-
+      
       let yearRange = ''
 
       if(dateRange[0] === dateRange[1]){
@@ -106,9 +114,8 @@ function PaperSearch() {
       }else{
         yearRange = dateRange[0]+'-'+dateRange[1]
       }
-
-      const papers = await searchPapers(text, FOSFilter, yearRange, sort, 0, limit)
-      dispatch({type:'GET_PAPERS', payload: papers})
+      
+      await searchPapers(text, FOSFilter, yearRange, sort, 0, limit, dispatch)
     }
   }
 

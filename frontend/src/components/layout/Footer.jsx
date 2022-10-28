@@ -6,7 +6,7 @@ function Footer() {
 
   return (
     <footer className="footer p-10 bg-gray-700 
-      text-primary-content footer-center">
+      text-primary-content footer-center relative top-16">
         <div>
             <svg xmlns="http://www.w3.org/2000/svg"
                  viewBox="0 0 24 24"

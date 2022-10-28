@@ -1,15 +1,24 @@
 import { useContext, useEffect, useState } from 'react'
-import { useParams, Link} from 'react-router-dom'
+import { useParams, Link, useLocation} from 'react-router-dom'
 import SemanticscholarContext from '../context/semanticscholar/SemanticsholarContext'
-import Spinner from '../components/layout/Spinner'
+import BucketContext from '../context/bucket/bucketContext'
 import { getPaperDetail } from '../context/semanticscholar/SemanticsholarActions'
+import { addPaper, removePaper } from '../context/bucket/bucketActions'
 import {authorsToString} from '../util/converter'
+import Spinner from '../components/layout/Spinner'
 
 function Paper() {
 
-  const { paper, dispatch, papers, bucketItems, loading} = useContext(SemanticscholarContext)
+  const { paper, dispatch, papers, loading} = useContext(SemanticscholarContext)
+  const {bucketItems, bucketDispatch} = useContext(BucketContext)
+
+
+  //code copied from PaperItem (use on the checkbox)
+  const [isChecked, setIsChecked] = useState(false)
+  const { data } = papers
 
   const params = useParams()
+  const { index } = useLocation().state
   const id = params.paperId
 
   const {paperId, title, authors, publicationDate, fieldsOfStudy, journal, abstract, citations, references} = paper
@@ -17,22 +26,47 @@ function Paper() {
   useEffect(() => {
       if(!paper || (id !== paper.paperId)){
         const getPaper = async (id) => {
-          const paperDetail = await getPaperDetail(id)
-          dispatch({type: 'GET_PAPER', payload: paperDetail})
+          await getPaperDetail(id, dispatch)
         }
         getPaper(id)
+      }
 
-       dispatch({type:'SET_LOADING'})
+      const checkedItem = bucketItems.find( paper => paper.paperId === paperId)
+
+      if(checkedItem){
+          setIsChecked(true)
       }
       
-  }, [dispatch, params.paperId, paper])
+  }, [dispatch, params.paperId, paper, isChecked])
+
+  const handleAddOnChange = async (position, e) => {
+    const paperItem = data[position]
+
+    if(data[position].paperId === e.target.value){
+      const paperExists = bucketItems.find(item => item.paperId === e.target.value)
+
+      if(e.target.checked){
+        if(!paperExists){
+           await addPaper(paperItem, bucketDispatch)
+        }
+      }else{
+        if(paperExists){
+            const id = paperExists._id
+            await removePaper(id, bucketDispatch)
+            setIsChecked(false)
+        }else{
+            console.log(`_id not found`)
+        }
+      }
+    }
+  }
 
     if(loading){
       return <Spinner/>
     }else{
       return <>         
             <div>
-              <h1></h1>
+              {/* <h1>{index}</h1> */}
               <div className="flex justify-between">
                 <Link 
                   to='/' 
@@ -47,11 +81,11 @@ function Paper() {
                         id={paperId}
                         className="checkbox checkbox-primary checkbox-lg"
                         value={paperId}
-                        // checked= {isChecked}
-                        // onChange={(e) => {
-                        //   handleAddOnChange(index, e)
-                        //   setIsChecked(!isChecked)
-                        // }}
+                        checked= {isChecked}
+                        onChange={(e) => {
+                          handleAddOnChange(index, e)
+                          setIsChecked(!isChecked)
+                        }}
                   />
                   </label>
                 </div>

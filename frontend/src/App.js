@@ -9,28 +9,34 @@ import Bucket from './pages/Bucket'
 import Alert from './components/layout/Alert'
 import { SemanticscholarProvider} from './context/semanticscholar/SemanticsholarContext'
 import { AlertProvider} from './context/alert/AlertContext'
+import { BucketProvider} from './context/bucket/bucketContext'
 
 function App() {
   return (
     <SemanticscholarProvider>
-      <AlertProvider>
-        <Router>
-          <div className="flex flex-col justify-between h-screen">
-            <Navbar />
-              <main className="container mx-auto px-3 pb-12">
-              <Alert />
-              <Routes>
-                <Route path="/" exact element={<Home/>} />
-                <Route path="/about" element={<About/>} />
-                <Route path="/paper/:paperId" element={<Paper/>} />
-                <Route path="/bucket" element={<Bucket/>} />
-                <Route path="/*" element={<NotFound/>} />
-              </Routes>
-              </main>
-            <Footer/>
-          </div>
-        </Router>
-      </AlertProvider>
+      <BucketProvider>
+        <AlertProvider>
+          <Router>
+            <div className="flex flex-col h-screen">
+              <Navbar />
+                  <div className='relative top-16'>
+          
+                  <main className="container mx-auto px-3 pb-12">
+                  <Alert />
+                  <Routes>
+                    <Route path="/" exact element={<Home/>} />
+                    <Route path="/about" element={<About/>} />
+                    <Route path="/paper/:paperId" element={<Paper/>} />
+                    <Route path="/bucket" element={<Bucket/>} />
+                    <Route path="/*" element={<NotFound/>} />
+                  </Routes>
+                  </main>
+                  <Footer/>
+                  </div>
+            </div>
+          </Router>
+        </AlertProvider>
+      </BucketProvider>
     </SemanticscholarProvider>
   );
 }

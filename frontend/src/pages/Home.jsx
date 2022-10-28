@@ -3,10 +3,10 @@ import PaperResults from "../components/paper/PaperResults"
 
 function Home() {
   return (
-    <>
+    <div>
         <PaperSearch />
         <PaperResults />
-    </>
+    </div>
   )
 }
 

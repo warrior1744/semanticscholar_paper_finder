@@ -162,13 +162,113 @@ PaperSearch: Pagination For Papers
 
 PaperSearch: Limitation For Paper items
 
+67. create a dropdown menu and selections input
+68. create limit and setLimit useState and handleLimitOnChange function
+69. bring in the limit state to searchPapers call
+
 Passing Props to Paper (checkbox) working...
 
-localStorage
+70. PaperItem.jsx -> pass index props through Link Component
+71. Paper.jsx -> import useLocation to bring in index state
+72. create isChecked state for checkbox input
+73. create handleAddOnChange for adding paper data in papers context
+74. create a find method for every items which the paperId is equal
+    if found in the list (bucketItems), set the paper's check box checked
 
-Backend Server
+Backend Server Setup
 
-1.
+75. create Backend folder in the project root folder
+76. run npm init in the project root folder
+77. run npm install express in the root folder
+78. in backend folder -> create server.js
+79. root -> package.json file, create "type": "module" object value
+80. create data folder (for creating user data)
+81. create users.js and some user data
+82. npm install bcryptjs
+83. users.js -> import bcrypt and use it on users password
+
+Server Routes and Nodemon Setup
+
+84. create routes and test for bucket and bucket/:id (using dummy data)
+85. npm install -D nodemon concurrently
+86. add script "server": "nodemon backend/server"
+87. add script "dev": "concurrently \"npm run server\" \"npm run client\""
+
+Environment Variables
+
+88. npm install dotenv
+89. create .env file in the project root folder
+90. server.js -> import dotenv and dotenv.config() creation
+
+MongoDB and Schema Setup
+
+91. .env -> create a variable for MongoDB URI connection string
+92. create database semanticscholar
+
+Mongooose and creating database
+
+93. npm install mongoose
+94. project root folder -> create config folder
+95. config folder -> create db.js, create connectDB connection module
+96. server.js -> import connectDB module and test the server
+
+Adding Colors to the Console (optional)
+
+97. npm install colors
+98. server.js -> import color from 'colors'
+
+Modeling data
+
+99. create models folder
+100. create bucketModel.js and userModel.js
+101. userModel.js -> build Schema and pass to model method
+102. bucketModel.js -> build Schema and pass to model method
+103. npm install bcryptjs
+104. create users.js in data folder
+105. users.js -> import bcryptjs
+
+Import Data to create initial Bucket items (Experimental)
+
+106. Beckend Folder -> create seeder.js with data import and destroy
+107. project root folder package.json -> add
+     data:import and data:destroy to run backend/seeder file
+
+Backend: Fetching Data from the Database
+
+108. backend folder -> create routes folder
+109. routes folder -> create bucketRoutes.js
+110. server.js -> import bucketRoutes.js and create pipelines
+     example: app.use('/api/route', Routes)
+111. backend folder -> create controllers folder
+112. controllers folder -> create bucketController.js and
+     userControllers.js
+113. npm install express-async-handler
+114. in the controllers.js file, import the models and asyncHandler
+115. create /api/bucket and /api/bucket/:id handlers
+116. bucketRoutes.js -> create routes for GET papers, GET paper by id, DELETE papers and DELETE paper by id
+
+Backend : Custom Error Handling (Send error as JSON format)
+
+117. backend folder -> create middleware folder
+118. middleware folder -> create errorMiddleware.js
+119. errorMiddleware.js -> add 404 not found and 500 server error handlers
+120. server.js -> import notFound and errorHandler from the middleware and implement app.use()
+
+Frontend: Working with backend server \*\*\* (Experimental)
+
+121. open package.json file -> add "proxy": "http://127.0.0.1:5000",
+122. Bucket.jsx -> import getAllPapers from SemanticsholarActions
+123. Bucket.jsx -> import removeAllPapers, create removeAllPapersHandler
+124. PaperItem.jsx ->
+125. PaperItem.jsx ->
+
+Backend: User Authentication
+
+117. UserModel.js -> create matchPassword method using bcrypt
+118. use bcrypt salt and hash before save changed password
+119.
+120. create utils folder, create generateToken.js in the folder
+121.
 
 Deploy to Heroku
 
