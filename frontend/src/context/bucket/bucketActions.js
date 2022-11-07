@@ -2,12 +2,13 @@ import axios from 'axios'
 
 //save paper to the bucket in DB
 
-export const addPaper = async (paper, dispatch) => {
+export const addPaper = async (paper, dispatch, userInfo) => {
     try{
         dispatch({type: 'SET_LOADING'})
         const config = {
             headers: {
                 'Content-Type': 'application/json',
+                Authorization: `Bearer ${userInfo.token}`
             }
         }
         const { data } = await axios.post(`/api/bucket`, paper, config)
@@ -28,11 +29,17 @@ export const addPaper = async (paper, dispatch) => {
 
 //delete a paper from the bucket in DB
 
-export const removePaper = async (id, dispatch) => {
+export const removePaper = async (id, dispatch, userInfo) => {
     try {
         dispatch({type: 'SET_LOADING'})
 
-        const {data} = await axios.delete(`/api/bucket/${id}`)
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const {data} = await axios.delete(`/api/bucket/${id}`, config)
 
         dispatch({
             type: 'REMOVE_PAPER_FROM_BUCKET_SUCCESS',
@@ -51,15 +58,18 @@ export const removePaper = async (id, dispatch) => {
 
 //get papers from the bucket in DB
 
-export const getAllPapers = async (dispatch) => {
+export const getAllPapers = async (dispatch, userInfo) => {
     try{
         dispatch({type: 'SET_LOADING'})
-        // const config = {
-        //     headers: {
 
-        //     }
-        // }
-        const  {data}  = await axios.get(`/api/bucket`)
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const  {data}  = await axios.get(`/api/bucket`, config)
+
         dispatch({
             type: 'GET_ALL_BUCKET_PAPERS_SUCCESS',
             payload: data
@@ -76,11 +86,17 @@ export const getAllPapers = async (dispatch) => {
 
 //delete all papers from the bucket in DB
 
-export const removeAllPapers = async (dispatch) => {
+export const removeAllPapers = async (dispatch, userInfo) => {
     try{
         dispatch({type: 'SET_LOADING'})
 
-        await axios.delete(`/api/bucket`)
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        await axios.delete(`/api/bucket`, config)
 
         dispatch({
             type: 'REMOVE_ALL_BUCKET_PAPERS_SUCCESS'

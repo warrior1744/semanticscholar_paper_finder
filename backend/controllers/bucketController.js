@@ -7,7 +7,7 @@ import asyncHandler from 'express-async-handler'
 //@access Private
 
 const getPapersFromBucket = asyncHandler (async (req, res) => {
-    const bucket =  await Bucket.find({})
+    const bucket =  await Bucket.find({user: req.user._id})
     if(bucket){
         res.json(bucket)
     }else{
@@ -22,7 +22,12 @@ const getPapersFromBucket = asyncHandler (async (req, res) => {
 //@access Private
 
 const getPaperFromBucketById = asyncHandler (async (req, res) => {
-    const paper = await Bucket.findById(req.params.id)
+    const paper = await Bucket.findById(req.params.id).populate(
+        {
+            path: 'user',
+            select: 'firstname lastname email'
+        }
+    )
     if(paper) {
         res.json(paper)
     }else{
@@ -37,6 +42,8 @@ const getPaperFromBucketById = asyncHandler (async (req, res) => {
 
 const addPaperToBucket = asyncHandler (async (req, res) => {
 
+
+
     const { paperId,
             title,
             authors,
@@ -50,13 +57,17 @@ const addPaperToBucket = asyncHandler (async (req, res) => {
             s2FieldsOfStudy,
              } = req.body
 
-    const paperExists = await Bucket.findOne({paperId: paperId})
+
+
+             //find the exist paper of the same user
+    const paperExists = await Bucket.findOne({paperId: paperId, user: req.user._id})
 
     if(paperExists){
         res.status(404)
         throw new Error('paper already exists')
     }else{
         const paper = await Bucket.create({
+            user: req.user._id,
             paperId,
             title,
             authors,
@@ -84,7 +95,7 @@ const addPaperToBucket = asyncHandler (async (req, res) => {
 //@access Private
 
 const deletePapersFromBucket = asyncHandler (async (req, res) => {
-    const papers = await Bucket.find({})
+    const papers = await Bucket.find({user: req.user._id})
     if(papers){
         await Bucket.remove({})
         res.json({message: `The papers are removed from the bucket`})
@@ -99,7 +110,11 @@ const deletePapersFromBucket = asyncHandler (async (req, res) => {
 //@access Private
 
 const deletePaperFromBucketById = asyncHandler (async (req, res) => {
-    const paper = await Bucket.findById(req.params.id)
+    const paper = await Bucket.findById(req.params.id).populate(        
+        {
+        path: 'user',
+        select: 'firstname lastname email'
+    })
     if(paper){
         const paperId = paper.paperId
         await paper.remove()

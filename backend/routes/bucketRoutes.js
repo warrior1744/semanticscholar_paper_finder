@@ -5,16 +5,18 @@ import { getPapersFromBucket,
          deletePaperFromBucketById,
          addPaperToBucket,
        } from '../controllers/bucketController.js'
+import { protect, admin} from '../middleware/authMiddleware.js'
+
 
 const router = express.Router()
 
 router.route('/')
-      .get(getPapersFromBucket)
-      .post(addPaperToBucket)
-      .delete(deletePapersFromBucket)
+      .get(protect, getPapersFromBucket)
+      .post(protect, addPaperToBucket)
+      .delete(protect, deletePapersFromBucket)
 
 router.route('/:id')
-      .get(getPaperFromBucketById)
-      .delete(deletePaperFromBucketById)
+      .get(protect, getPaperFromBucketById)
+      .delete(protect, deletePaperFromBucketById)
 
 export default router

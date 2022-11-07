@@ -1,12 +1,34 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import {FaBookReader} from 'react-icons/fa'
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import BucketContext from '../../context/bucket/bucketContext'
+import UserContext from '../../context/user/UserContext'
+import { getAllPapers } from '../../context/bucket/bucketActions'
+import {logout} from '../../context/user/UserActions'
+
+// import { useCountdown} from '../../customHooks/useCountdown'
 
 function Navbar({title}) {
 
-  const {bucketItems} = useContext(BucketContext)
+  const {userLogin, userDispatch} = useContext(UserContext)  
+  const {bucketItems, bucketDispatch} = useContext(BucketContext)
+//   const [days, hours, minutes, seconds] = useCountdown('2022,11,30')
+
+  const {userInfo} = userLogin
+
+  useEffect(() => {
+    if(userInfo){
+        const getPapers = async () => {
+          await getAllPapers(bucketDispatch, userInfo)
+      }
+      getPapers()
+    }
+  },[userInfo])
+
+  const logoutHandler = () => {
+    logout(userDispatch)
+  }
 
   return (
     <nav className="navbar mb-12 shadow-lg bg-neutral text-neutral-content fixed top-0 left-0 right-0 z-10">
@@ -20,13 +42,38 @@ function Navbar({title}) {
                 <div className="flex justify-end gap-4">
                     <Link to='/' className='btn btn-ghost btn-sm rounded-btn text-xl'>首頁
                     </Link>
-                    <div className="indicator">
-                        <div className="span indicator-item badge badge-secondary">{bucketItems.length}</div>
-                        <Link to='/bucket' className='btn btn-ghost btn-sm rounded-btn text-xl'>清單
+
+                    {userInfo? (
+                        <div className="dropdown">
+                            <label tabIndex={0} className="btn btn-ghost btn-sm rounded-btn text-xl">嗨  {userInfo.firstname}</label>
+                            <ul tabIndex={0}
+                                className="dropdown-content menu p-5 shadow bg-base-100 rounded-box w-52">
+                                <li>  
+                                    <Link to='/bucket' className='text-lg text-black btn btn-ghost'>清單
+                                        <div className="badge badge-secondary">{bucketItems && (bucketItems.length)}</div>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to='/profile' className='text-lg text-black btn btn-ghost'>個人檔案
+                                    </Link>
+                                </li>
+                                <li>
+                                    <button 
+                                        className='text-lg text-black btn btn-ghost'
+                                        onClick={logoutHandler}
+                                        >登出
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    ) : (
+                        <Link to='/login' className='btn btn-ghost btn-sm rounded-btn text-xl'>登入
                         </Link>
-                    </div>
+                    )}
+
                     <Link to='/about' className='btn btn-ghost btn-sm rounded-btn text-xl'>關於
                     </Link>
+                    {/* <p>{days} Days {hours}:{minutes}:{seconds}</p> */}
                 </div>
             </div>
         </div>
@@ -41,10 +88,5 @@ Navbar.defaultProps = {
 Navbar.propTypes = {
     title: PropTypes.string,
 }
-
-// <div className="indicator">
-//   <span className="indicator-item badge badge-secondary">99+</span> 
-//   <button className="btn">inbox</button>
-// </div>
 
 export default Navbar

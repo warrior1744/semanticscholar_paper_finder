@@ -7,16 +7,6 @@
         })
     }
 
-
-    const authorsToString = (authors) => {
-        let authorsString = ''
-        authors.forEach((author, index) => {
-            authorsString = authorsString.concat(author.name+',')
-        })
-        authorsString = authorsString.substring(0, authorsString.length-1)
-        return authorsString
-    }
-
     const removeDupObjValues = (arr, key) => {
         let uniqueValues = [] 
         arr.filter(element => {
@@ -37,4 +27,4 @@
     }
 
 
-export { authorsToString, toString, removeDupObjValues }
+export { toString, removeDupObjValues }

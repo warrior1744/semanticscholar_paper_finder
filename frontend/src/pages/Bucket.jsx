@@ -1,36 +1,39 @@
-import {useContext, useState, useEffect} from 'react'
+import {useContext, useEffect} from 'react'
 import SemanticscholarContext from '../context/semanticscholar/SemanticsholarContext'
 import BucketContext from '../context/bucket/bucketContext'
 import writeXlsxFile from 'write-excel-file'
-import {authorsToString} from '../util/converter'
 import { Link } from 'react-router-dom'
 import { getAllPapers, removeAllPapers, removePaper } from '../context/bucket/bucketActions'
-
+import UserContext from '../context/user/UserContext'
 
 
 function Bucket() {
 
     const {dispatch} = useContext(SemanticscholarContext)
+    const {userLogin} = useContext(UserContext)
     const {bucketItems, bucketDispatch} = useContext(BucketContext)
 
+    const {userInfo} = userLogin
 
     // get bucket items from the database
     useEffect(() => {
-        const getPapers = async () => {
-            await getAllPapers(bucketDispatch)
+        if(userInfo){
+            const getPapers = async () => {
+                await getAllPapers(bucketDispatch, userInfo, userInfo)
+            }
+            getPapers()
         }
-        getPapers()
-    },[dispatch, bucketDispatch])
+    },[dispatch, bucketDispatch, userInfo])
 
     const removeAllPapersHandler = async () => {
         if(bucketItems.length > 0){
-            await removeAllPapers(bucketDispatch)
+            await removeAllPapers(bucketDispatch, userInfo, userInfo)
         }
     }
 
     const handleDelete = async (id) => {
         if(id){
-            await removePaper(id, bucketDispatch)
+            await removePaper(id, bucketDispatch, userInfo)
         }
         console.log(`paper ${id} has been deleted`)
     }
@@ -58,7 +61,7 @@ function Bucket() {
 
         bucketItems.forEach((paper, index) => {
             item['title'] = paper.title
-            item['authors'] = authorsToString(paper.authors)
+            item['authors'] = paper.authors.reduce((str, obj, index) => str+(index>0?", ":"")+obj.name,'')
             item['journalName'] = paper.journal.name 
             item['journalVolume'] = paper.journal.volume
             item['journalPages'] = paper.journal.pages
@@ -170,9 +173,9 @@ function Bucket() {
                                                 篇名：{paper.title}
                                             </div>
                                         </li>
-                                    )}
+                                    )}  _.pluck(names3, 'name').join(', ')
                                     {paper.authors && (
-                                        <li>作者：{authorsToString(paper.authors)}</li>
+                                        <li>作者：{paper.authors.reduce((str, obj, index) => str+(index>0?", ":"")+obj.name,'')}</li>
                                     )}
             
                                     {paper.journal &&

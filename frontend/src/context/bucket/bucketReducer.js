@@ -22,11 +22,6 @@ export const bucketReducer = (state, action) => {
                     
                 }
             }
-        case 'ADD_PAPER_TO_BUCKET_FAIL':
-            return {
-                bucketLoading: false,
-                error: action.payload
-            }
         case 'REMOVE_PAPER_FROM_BUCKET_SUCCESS':
             return {
                 ...state,
@@ -35,21 +30,11 @@ export const bucketReducer = (state, action) => {
                 success: true,
                 message: action.payload.message,
             } 
-        case 'REMOVE_PAPER_FROM_BUCKET_FAIL':
-            return {
-                bucketLoading: false,
-                error: action.payload
-            }
         case 'GET_ALL_BUCKET_PAPERS_SUCCESS':
             return {
                 ...state,
                 bucketItems: action.payload,
                 bucketLoading: false,
-            }
-        case 'GET_ALL_BUCKET_PAPERS_FAIL':
-            return {
-                bucketLoading: false,
-                error: action.payload
             }
         case 'REMOVE_ALL_BUCKET_PAPERS_SUCCESS':
             return {
@@ -57,11 +42,6 @@ export const bucketReducer = (state, action) => {
                 bucketLoading: false,
                 success: true,
                 bucketItems:[]
-            }
-        case 'REMOVE_ALL_BUCKET_PAPERS_FAIL':
-            return {
-                bucketLoading: false,
-                error: action.payload
             }
         default:
             return {

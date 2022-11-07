@@ -3,7 +3,7 @@ import React from 'react'
 function About() {
   return (
     <>
-        <h1 className="text-6xl mb4">Semanticscholar Paper Finder</h1>
+        <h1 className="text-4xl mb-6">Semanticscholar Paper Finder</h1>
         <p className="mb-4 text-2xl font-light">
         A free, AI-powered research tool for scientific literature
         </p>

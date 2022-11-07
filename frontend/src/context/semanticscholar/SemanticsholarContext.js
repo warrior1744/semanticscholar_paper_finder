@@ -6,7 +6,6 @@ const SemanticscholarContext = createContext()
 export const SemanticscholarProvider = ({children}) => {
 
     const SemanticscholarinitialState = {
-        userLogin: {userInfo:{}},
         search:"",
         papers:{data:[]},
         paper:{},

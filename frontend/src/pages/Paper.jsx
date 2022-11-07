@@ -6,16 +6,18 @@ import { getPaperDetail } from '../context/semanticscholar/SemanticsholarActions
 import { addPaper, removePaper } from '../context/bucket/bucketActions'
 import {authorsToString} from '../util/converter'
 import Spinner from '../components/layout/Spinner'
+import UserContext from '../context/user/UserContext'
 
 function Paper() {
 
   const { paper, dispatch, papers, loading} = useContext(SemanticscholarContext)
   const {bucketItems, bucketDispatch} = useContext(BucketContext)
-
+  const {userLogin} = useContext(UserContext)
 
   //code copied from PaperItem (use on the checkbox)
   const [isChecked, setIsChecked] = useState(false)
   const { data } = papers
+  const { userInfo} = userLogin
 
   const params = useParams()
   const { index } = useLocation().state
@@ -47,12 +49,12 @@ function Paper() {
 
       if(e.target.checked){
         if(!paperExists){
-           await addPaper(paperItem, bucketDispatch)
+           await addPaper(paperItem, bucketDispatch, userInfo)
         }
       }else{
         if(paperExists){
             const id = paperExists._id
-            await removePaper(id, bucketDispatch)
+            await removePaper(id, bucketDispatch, userInfo)
             setIsChecked(false)
         }else{
             console.log(`_id not found`)
@@ -73,22 +75,24 @@ function Paper() {
                   className='btn btn-ghost btn-outline btn-lg rounded-btn mb-3'
                   >回上頁
                 </Link>
-                <div className="form-control">
-                  <label className="cursor-pointer label">
-                  <span className='label-text text-base mr-2'>清單</span>
-                  <input type="checkbox" 
-                        name={paperId}
-                        id={paperId}
-                        className="checkbox checkbox-primary checkbox-lg"
-                        value={paperId}
-                        checked= {isChecked}
-                        onChange={(e) => {
-                          handleAddOnChange(index, e)
-                          setIsChecked(!isChecked)
-                        }}
-                  />
-                  </label>
-                </div>
+                {userInfo &&
+                  <div className="form-control">
+                    <label className="cursor-pointer label">
+                    <span className='label-text text-base mr-2'>清單</span>
+                    <input type="checkbox" 
+                          name={paperId}
+                          id={paperId}
+                          className="checkbox checkbox-primary checkbox-lg"
+                          value={paperId}
+                          checked= {isChecked}
+                          onChange={(e) => {
+                            handleAddOnChange(index, e)
+                            setIsChecked(!isChecked)
+                          }}
+                    />
+                    </label>
+                  </div>
+                }
                 </div>
               </div>
 
@@ -99,7 +103,7 @@ function Paper() {
               }
               {authors &&
                 <div className='font-thin mb-3 italic'>
-                  <p>{authorsToString(authors)}</p>
+                  <p>{authors.reduce((str, obj, index) => str+(index>0?', ': "")+obj.name,'')}</p>
                 </div>
               }
 

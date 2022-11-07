@@ -17,10 +17,6 @@ export const searchPapers = async (text, FOSFilter ='', yearRange, sort, offset=
 
         // const params = new URLSearchParams({query: text})
 
-         console.log(encodedText)
-        const qString = `/paper/search?query=${encodedText}&offset=${offset}&limit=${limit}&fields=title,authors,venue,publicationDate,publicationTypes,year,journal,s2FieldsOfStudy,fieldsOfStudy,abstract,url&fieldsOfStudy=${FOSFilter}&year=${yearRange}&sort=${sort}`
-        console.log(qString)
-
         const { data } = await semanticscholar.get(`/paper/search?query=${encodedText}&offset=${offset}&limit=${limit}&fields=title,authors,venue,publicationDate,publicationTypes,year,journal,s2FieldsOfStudy,fieldsOfStudy,abstract,url&fieldsOfStudy=${FOSFilter}&year=${yearRange}&sort=${sort}`)
     
         //save the searching params and parameters to the object
@@ -30,7 +26,6 @@ export const searchPapers = async (text, FOSFilter ='', yearRange, sort, offset=
         data['FOSFilter'] = FOSFilter
         data['yearRange'] = yearRange
         data['sort'] = sort
-        console.log(data)
         dispatch({type:'GET_PAPERS', payload: data})
     }catch (error){
         dispatch({

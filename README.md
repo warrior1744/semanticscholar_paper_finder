@@ -265,11 +265,56 @@ Frontend: Working with backend server \*\*\* (Experimental)
 
 Backend: User Authentication
 
-117. UserModel.js -> create matchPassword method using bcrypt
-118. use bcrypt salt and hash before save changed password
-119.
-120. create utils folder, create generateToken.js in the folder
-121.
+125. npm install jsonwebtoken
+126. in middleware folder -> create authMiddleware.js
+127. UserModel.js -> create matchPassword method using bcrypt
+128. use bcrypt salt and hash before save changed password
+129. create utils folder, create generateToken.js in the folder
+130. controller folder -> create userController.js and these mothods.
+     route GET /api/users/login (find and return user info data and token)
+     route POST /api/users (take in body data and create a User object)
+     route GET /api/user/profile (verify token, , find the User object and return user info)
+     route PUT /api/users/profile (take in body data, save the object, and return user info data and token)
+     route GET /api/users (verify user token, if is Admin?, then returns user data)
+     route GET /api/users/:id (verify user token, if is Admin?, then find the user object by id, and finally returns the user object)
+     route PUT /api/users/:id (verify user token, if is Admin?, then find the user object by id, take in body data and update the object, finally save)
+     route DELETE /api/users/:id (verify user token, if is Admin? then find the user object by id, remove the object and finally return a message)
+131. routes folder -> create userRoutes.js, import express, userController.js and authMiddleware.js, create routes for /, /login, /profile and /:id
+132. server.js -> import userRoutes.js and app.use /api/users
+
+Frontend: User Context, Actions, and Reducer
+
+133. create user folder in context folder
+134. create UserReducer.js, create login, register, updateprofile for private users, and
+     list, update, delete for users with admin privilege
+135. create UserContext.js, create initial values and bring in the reducer, finally create the userContext Provider
+136. App.js -> import UserProivder from UserContext
+
+Frontend: Navbar
+
+137. add dropdown menu with links to /bucket /profile /logout /login
+138. import UserContext, use userInfo context
+
+Frontend: User Login Page
+
+139. in pages folder -> create Login.jsx
+140. npm install react-hook-form, import useForm from react-hook-form
+     import UserContext, login from UserActions
+141. create controlled inputs and form validation
+
+Frontend: User Register Page
+
+142. in pages folder -> create Register.jsx
+143. import useForm from react-hook-form
+     import UserContext, login from UserActions
+144. create controlled inputs and form validation
+
+Frontend: User Profile Page
+
+145. in pages folder -> create Profile.jsx
+146.
+
+Frontend: Admin Page
 
 Deploy to Heroku
 

@@ -1,14 +1,11 @@
 
-import { useState, useContext, useEffect } from 'react'
+import { useState, useContext, useEffect, useCallback } from 'react'
 import SemanticscholarContext from '../../context/semanticscholar/SemanticsholarContext'
 import { searchPapers } from '../../context/semanticscholar/SemanticsholarActions'
-import { getAllPapers } from '../../context/bucket/bucketActions'
 import AlertContext from '../../context/alert/AlertContext'
 import { setSearchAlert } from '../../context/alert/AlertActions'
 import Box from '@mui/material/Box'
 import Slider from '@mui/material/Slider'
-import BucketContext from '../../context/bucket/bucketContext'
-
 function PaperSearch() {
 
   const fieldsOfStudy = [
@@ -45,33 +42,30 @@ function PaperSearch() {
   const year = date.getFullYear()
   const lastTenYears = year - 10
 
-  const [text, setText] = useState('')
+  const [searchText, setSearchText] = useState('')
   const [FOSCheckedState, setFOSCheckedState] = useState(
     new Array(fieldsOfStudy.length).fill(false)
   )  //initial state = [false, false, false, false, ...]
   const [sort, setSort] = useState('relevance')
   const [FOSFilter, setFOSFilter] = useState('')
-  const [dateRange, setDateRange] = useState([lastTenYears, year])
+  const [dateRange, setDateRange] = useState(lastTenYears+'-'+year)
   const [limit, setLimit] = useState(100)
 
   const {papers, dispatch, loading} = useContext(SemanticscholarContext)
   const {dispatchAlert} = useContext(AlertContext)
-  const {bucketDispatch} = useContext(BucketContext)
   const { data } = papers
 
-
   useEffect(() => {
+    console.log('useEffect runs...')
     const relevance = document.getElementById('relevance')
     relevance.checked = true
-
-    const getPapers = async () => {
-      await getAllPapers(bucketDispatch)
-  }
-  getPapers()
-  },[])
+    if(searchText !== ''){
+      searchPapers(searchText, FOSFilter, dateRange, sort,0 , limit, dispatch)
+    }
+  },[sort, FOSFilter, dateRange, limit])
 
   const handleDateRangeOnChange = (event, newDateRange) => {
-    setDateRange(newDateRange)
+    setDateRange(`${newDateRange[0]}-${newDateRange[1]}`)
   }
 
   const handleFOSOnChange = (position) => {
@@ -92,30 +86,20 @@ function PaperSearch() {
     setSort(e.target.value)
   }
 
-  const handleChange = (e) => {
-    setText(e.target.value)
-  }
+  const handleSearchChange = useCallback((e) => setSearchText(e.target.value), [])
 
-  const handleLimitOnChange = (e) => {
+  const handleLimitOnChange = async (e) => {
     setLimit(Number(e.target.value))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSearchSubmit = async (e) => {
     e.preventDefault()
-    if(text === ''){
+    if(searchText === ''){
       setSearchAlert('Please enter something', 'error', dispatchAlert)
     }else{
-      dispatch({type:'SET_SEARCH', payload: text})
-      
-      let yearRange = ''
-
-      if(dateRange[0] === dateRange[1]){
-        yearRange = dateRange[0]
-      }else{
-        yearRange = dateRange[0]+'-'+dateRange[1]
-      }
-      
-      await searchPapers(text, FOSFilter, yearRange, sort, 0, limit, dispatch)
+      dispatch({type:'SET_SEARCH', payload: searchText})
+           
+      await searchPapers(searchText, FOSFilter, dateRange, sort, 0, limit, dispatch)
     }
   }
 
@@ -132,15 +116,15 @@ function PaperSearch() {
         </div>
         )}
         <div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSearchSubmit}>
             <div className="form-control">
               <div className="relative">
                 <input 
                       type="text" 
                       className="input-primary w-full pr-40 bg-gray-200 input input-lg text-black input-bordered"
                       placeholder='Search Papers'
-                      value={text}
-                      onChange={handleChange}
+                      value={searchText}
+                      onChange={handleSearchChange}
                 />
                 <button 
                       type='text'
@@ -187,7 +171,7 @@ function PaperSearch() {
                   min={1951}
                   max={year}
                   getAriaLabel={() => 'Date Range'}
-                  value={dateRange}
+                  value={[Number(dateRange.split('-')[0]), Number(dateRange.split('-')[1])]}
                   onChange={handleDateRangeOnChange}
                   valueLabelDisplay='auto'
                 />
@@ -211,6 +195,7 @@ function PaperSearch() {
                           value={type} 
                           className="radio"
                           onChange={(e) => handleSortOnChange(e, index)}
+                          disabled
                     />
                     {type}
                   </li>

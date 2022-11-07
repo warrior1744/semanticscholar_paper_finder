@@ -8,7 +8,8 @@ export const semanticscholarReducer = (state , action) => {
             }
         case 'FAIL_LOADING' :
             return {
-                loading: false, error: action.payload
+                loading: false, 
+                error: action.payload
             }                
         case 'SET_SEARCH':
             return {
@@ -43,6 +44,6 @@ export const semanticscholarReducer = (state , action) => {
                 paper: {},
             }
         default:
-            return state
+            throw new Error("No Action")
      }
 }

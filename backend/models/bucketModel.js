@@ -12,11 +12,11 @@ const s2FieldsOfStudySchema = mongoose.Schema({
 
 const bucketSchema = mongoose.Schema(
 {
-    // user: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: 'User'
-    // },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
+    },
     paperId: {
         type:String,
         required: true,

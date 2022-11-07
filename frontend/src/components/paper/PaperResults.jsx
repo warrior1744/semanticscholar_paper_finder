@@ -22,6 +22,9 @@ function PaperResults() {
     previousOffset, limit, dispatch)
   }
 
+  //useMemo -> migrate the await getAllPapers from PaperSearch Component in useEffect to useMemo here
+  //and then use on JSX render
+
   if(!loading){
     return (
       <div className='relative'>

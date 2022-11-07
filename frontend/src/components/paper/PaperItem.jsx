@@ -5,6 +5,7 @@ import SemanticscholarContext from '../../context/semanticscholar/Semanticsholar
 import BucketContext from '../../context/bucket/bucketContext'
 import {removeDupObjValues} from '../../util/converter'
 import { addPaper, removePaper } from '../../context/bucket/bucketActions'
+import UserContext from '../../context/user/UserContext'
 
 function PaperItem(
     {
@@ -16,14 +17,15 @@ function PaperItem(
 
   const {papers, dispatch} = useContext(SemanticscholarContext)  
   const {bucketItems, bucketDispatch} = useContext(BucketContext)
+  const {userLogin} = useContext(UserContext)
 
   const [category, setCategory] = useState([])
   const [isChecked, setIsChecked] = useState(false)
   
-
   const { paperId, title, authors, year, url, s2FieldsOfStudy, abstract, journal, publicationDate, pages} = paper
   
   const { data } = papers
+  const {userInfo} = userLogin
 
   const handleAddOnChange = async (position, e) => {
     const paperItem = data[position]
@@ -33,12 +35,12 @@ function PaperItem(
 
       if(e.target.checked){
         if(!paperExists){
-           await addPaper(paperItem, bucketDispatch)
+           await addPaper(paperItem, bucketDispatch, userInfo)
         }
       }else{
         if(paperExists){
             const id = paperExists._id
-            await removePaper(id, bucketDispatch)
+            await removePaper(id, bucketDispatch, userInfo)
             setIsChecked(false)
         }else{
             console.log(`_id not found`)
@@ -67,17 +69,19 @@ function PaperItem(
                     <span className='label-text text-base'>
                         {itemIndex+1}. {title}
                     </span>
-                    <input type="checkbox" 
-                           name={paperId}
-                           id={paperId}
-                           className="checkbox checkbox-primary checkbox-lg"
-                           value={paperId}
-                           checked= {isChecked}
-                           onChange={(e) => {
-                            handleAddOnChange(index, e)
-                            setIsChecked(!isChecked)
-                           }}
-                    />
+                    {userInfo &&
+                        <input type="checkbox" 
+                            name={paperId}
+                            id={paperId}
+                            className="checkbox checkbox-primary checkbox-lg"
+                            value={paperId}
+                            checked= {isChecked}
+                            onChange={(e) => {
+                                handleAddOnChange(index, e)
+                                setIsChecked(!isChecked)
+                            }}
+                         />
+                    }
                 </label>
             </div>
             <div className='mb-2' >
