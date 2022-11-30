@@ -1,5 +1,6 @@
 import Bucket from '../models/bucketModel.js'
 import asyncHandler from 'express-async-handler'
+import User from '../models/userModel.js'
 
 //@desc Fetch all papers in the bucket
 //@route GET /api/bucket
@@ -88,8 +89,9 @@ const addPaperToBucket = asyncHandler (async (req, res) => {
 
 const deletePapersFromBucket = asyncHandler (async (req, res) => {
     const papers = await Bucket.find({user: req.user._id})
+    
     if(papers){
-        await papers.remove()
+        await Bucket.deleteMany({user: req.user._id})
         res.json({message: `The papers are removed from the bucket`})
     }else{
         res.status(404)
