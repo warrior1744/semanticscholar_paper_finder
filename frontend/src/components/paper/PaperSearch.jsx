@@ -56,7 +56,6 @@ function PaperSearch() {
   const { data } = papers
 
   useEffect(() => {
-    console.log('useEffect runs...')
     const relevance = document.getElementById('relevance')
     relevance.checked = true
     if(searchText !== ''){
@@ -97,8 +96,7 @@ function PaperSearch() {
     if(searchText === ''){
       setSearchAlert('Please enter something', 'error', dispatchAlert)
     }else{
-      dispatch({type:'SET_SEARCH', payload: searchText})
-           
+      dispatch({type:'SET_SEARCH', payload: searchText})  
       await searchPapers(searchText, FOSFilter, dateRange, sort, 0, limit, dispatch)
     }
   }

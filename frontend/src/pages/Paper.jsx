@@ -4,7 +4,6 @@ import SemanticscholarContext from '../context/semanticscholar/SemanticsholarCon
 import BucketContext from '../context/bucket/bucketContext'
 import { getPaperDetail } from '../context/semanticscholar/SemanticsholarActions'
 import { addPaper, removePaper } from '../context/bucket/bucketActions'
-import {authorsToString} from '../util/converter'
 import Spinner from '../components/layout/Spinner'
 import UserContext from '../context/user/UserContext'
 

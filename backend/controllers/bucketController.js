@@ -1,7 +1,6 @@
 import Bucket from '../models/bucketModel.js'
 import asyncHandler from 'express-async-handler'
 
-
 //@desc Fetch all papers in the bucket
 //@route GET /api/bucket
 //@access Private
@@ -14,7 +13,6 @@ const getPapersFromBucket = asyncHandler (async (req, res) => {
         res.status(404)
         throw new Error('Bucket not found')
     }
-
 })
 
 //@desc Fetch a paper in the bucket
@@ -42,8 +40,6 @@ const getPaperFromBucketById = asyncHandler (async (req, res) => {
 
 const addPaperToBucket = asyncHandler (async (req, res) => {
 
-
-
     const { paperId,
             title,
             authors,
@@ -54,12 +50,8 @@ const addPaperToBucket = asyncHandler (async (req, res) => {
             abstract,
             url,
             year,
-            s2FieldsOfStudy,
-             } = req.body
+            s2FieldsOfStudy} = req.body
 
-
-
-             //find the exist paper of the same user
     const paperExists = await Bucket.findOne({paperId: paperId, user: req.user._id})
 
     if(paperExists){
@@ -90,14 +82,14 @@ const addPaperToBucket = asyncHandler (async (req, res) => {
     }
 })
 
-//@desc Delete all papers in the bucket
+//@desc Delete all papers in the users bucket
 //@route DELETE /api/bucket
 //@access Private
 
 const deletePapersFromBucket = asyncHandler (async (req, res) => {
     const papers = await Bucket.find({user: req.user._id})
     if(papers){
-        await Bucket.remove({})
+        await papers.remove()
         res.json({message: `The papers are removed from the bucket`})
     }else{
         res.status(404)
@@ -124,7 +116,6 @@ const deletePaperFromBucketById = asyncHandler (async (req, res) => {
         throw new Error('Paper not found')
     }
 })
-
 
 export { 
         getPapersFromBucket, 

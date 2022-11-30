@@ -14,7 +14,7 @@ function Register() {
   const {userLogin } = useContext(UserContext)  
   const {userInfo, loginError, loginLoading } = userLogin
 
-
+ 
   useEffect(() => {
     if(userInfo){
       navigate('/'+redirect)

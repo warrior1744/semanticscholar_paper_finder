@@ -42,10 +42,10 @@ const LoginInputs = ({redirect, loginError}) => {
   const { register, handleSubmit, watch, formState: {errors}} = useForm()
 
   const {userDispatch} = useContext(UserContext)  
+
   const onSubmit = async (data) => {
     await login(data.email, data.password, userDispatch)
   }
-
 
   return (
     <>
