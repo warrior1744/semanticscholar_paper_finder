@@ -1,6 +1,5 @@
 import Bucket from '../models/bucketModel.js'
 import asyncHandler from 'express-async-handler'
-import User from '../models/userModel.js'
 
 //@desc Fetch all papers in the bucket
 //@route GET /api/bucket

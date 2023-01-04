@@ -1,22 +1,24 @@
-import express from 'express'
-import { getPapersFromBucket, 
-         getPaperFromBucketById,
-         deletePapersFromBucket,
-         deletePaperFromBucketById,
-         addPaperToBucket,
-       } from '../controllers/bucketController.js'
-import { protect, admin} from '../middleware/authMiddleware.js'
+import express from "express";
+import {
+  getPapersFromBucket,
+  getPaperFromBucketById,
+  deletePapersFromBucket,
+  deletePaperFromBucketById,
+  addPaperToBucket,
+} from "../controllers/bucketController.js";
+import { protect } from "../middleware/authMiddleware.js";
 
+const router = express.Router();
 
-const router = express.Router()
+router
+  .route("/")
+  .get(protect, getPapersFromBucket)
+  .post(protect, addPaperToBucket)
+  .delete(protect, deletePapersFromBucket);
 
-router.route('/')
-      .get(protect, getPapersFromBucket)
-      .post(protect, addPaperToBucket)
-      .delete(protect, deletePapersFromBucket)
-
-router.route('/:id')
-      .get(protect, getPaperFromBucketById)
-      .delete(protect, deletePaperFromBucketById)
+router
+  .route("/:id")
+  .get(protect, getPaperFromBucketById)
+  .delete(protect, deletePaperFromBucketById);
 
 export default router

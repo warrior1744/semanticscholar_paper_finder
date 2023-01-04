@@ -1,5 +1,3 @@
-import {FaHashtag} from 'react-icons/fa'
-
 function Footer() {
 
     const footerYear = new Date().getFullYear()

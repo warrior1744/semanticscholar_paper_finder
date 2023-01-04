@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react' 
+import React, {useEffect, useContext} from 'react' 
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import UserContext from '../context/user/UserContext'
 import {login} from '../context/user/UserActions'
@@ -12,7 +12,7 @@ function Login() {
   const redirect = queryRedirect? queryRedirect.split('=')[1]:''
 
   const {userLogin} = useContext(UserContext)  
-  const {userInfo, loginError, loginLoading } = userLogin
+  const {userInfo, loginError} = userLogin
   
   useEffect(() => {
     if(userInfo){

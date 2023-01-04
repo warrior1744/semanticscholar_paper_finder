@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react' 
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import UserContext from '../context/user/UserContext'
 import {useForm} from 'react-hook-form'
 import {FaEye} from 'react-icons/fa'
