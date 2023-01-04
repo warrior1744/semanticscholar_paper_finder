@@ -40,4 +40,3 @@ app.listen(
     console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
 )
 
-export default app
