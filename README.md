@@ -316,7 +316,26 @@ Frontend: User Profile Page
 
 Frontend: Admin Page
 
-Deploy to Heroku
+
+
+
+
+
+Deploy to Heroku (you need to have a Heroku account and Heruko CLI installed)
 
 1. create Procfile
-2.
+2. go to the project root folder and run "heroku login"
+3. run "heroku create app-name"
+4. add env var to heroku app
+   $ heroku config:set USE_NPM_INSTALL=true -a <Your app name>
+   $ heroku config:set NODE_MODULES_CACHE=false -a <Your app name>
+5. check package.json file, add "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+6. check package.json file, check node version
+     "engines": {
+    "npm": "8.3.1",
+    "node": "^16.14.0"
+  }
+
+7. run "git push heroku main"
+8.
+    
