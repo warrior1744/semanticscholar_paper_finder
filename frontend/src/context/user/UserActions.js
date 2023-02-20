@@ -15,7 +15,7 @@ export const login = async (email, password, dispatch) => {
         dispatch({ type: 'USER_LOGIN_SUCCESS', payload: data})
         localStorage.setItem('userInfo', JSON.stringify(data))
     }catch (error){
-        console.log(`error ${error}`)
+        console.log('login Error', error)
         dispatch({ type:'USER_LOGIN_FAIL',
                    payload:
                    error.response && error.response.data.message
@@ -44,10 +44,11 @@ export const registerAction = async (firstname, lastname, email, password, dispa
         const { data } = await axios.post('/api/users', {firstname, lastname, email, password}, config)
 
         dispatch({
-            type:'USER_LOGIN_SUCCESS',
+            type:'USER_REGISTER_SUCCESS',
             payload: data
         })
     }catch(error){
+        console.log('registerAction Error', error)
         dispatch({
             type: 'USER_REGISTER_FAIL',
             payload:
@@ -76,6 +77,7 @@ export const getUserDetails = async (id, dispatch, userInfo) => {
             payload: data
         })
     }catch(error){
+        console.log('getUserDetails Error', error)
         dispatch({
             type: 'USER_DETAILS_FAIL',
             payload:
@@ -137,6 +139,7 @@ export const listUsers = async (dispatch, userInfo) => {
             payload: data,
         })
     }catch (error) {
+        console.log('listUsers Error', error)
         dispatch({
             type: 'USER_LIST_FAIL',
             payload:
