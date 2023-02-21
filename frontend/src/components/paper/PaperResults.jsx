@@ -43,12 +43,12 @@ function PaperResults() {
             <button 
               className='btn'
               onClick={(e) => {handlePreviousPage(e)}}
-              >上一頁
+              >Previous Page
             </button> 
             ) : (
             <button 
               className='btn invisible'
-              >上一頁
+              >Previous Page
             </button>
           )
         }
@@ -57,12 +57,12 @@ function PaperResults() {
             <button 
               className='btn'
               onClick={(e) => {handleNextPage(e)}}
-              >下一頁
+              >Next Page
             </button>
             ) : (
             <button 
               className='btn invisible'
-              >下一頁
+              >Next Page
             </button>
           )
         }

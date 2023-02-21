@@ -90,7 +90,7 @@ function PaperItem(
                         <label 
                             htmlFor={`attr${paperId}`}  
                             className="badge badge-primary modal-button cursor-pointer">
-                                屬性
+                                Details
                         </label>
                         <input 
                             type="checkbox" 
@@ -106,24 +106,24 @@ function PaperItem(
                                 </label>
                                     <ul>
                                     {publicationDate && (
-                                        <li key={publicationDate}>出版年月: {publicationDate}</li> 
+                                        <li key={publicationDate}>Publication: {publicationDate}</li> 
                                      )}
     
                                     {journal && 
                                          (journal.name && 
-                                            <li key={journal.name}>刊名： {journal.name}
+                                            <li key={journal.name}>Journal： {journal.name}
                                          </li>
                                          )
                                          } 
                                     {journal &&
                                          (journal.volume && 
-                                            <li key={journal.volume}>卷期： {journal.volume}
+                                            <li key={journal.volume}>Volume： {journal.volume}
                                          </li>
                                          )
                                     } 
                                     {journal &&
                                          (journal.pages && 
-                                            <li key={journal.pages}>頁次： {journal.pages}
+                                            <li key={journal.pages}>Page： {journal.pages}
                                          </li>
                                          )
                                     }     
@@ -137,7 +137,7 @@ function PaperItem(
                         <label 
                             htmlFor={`category${paperId}`}  
                             className="badge badge-primary modal-button cursor-pointer">
-                                分類
+                                Class
                         </label>
                         <input 
                             type="checkbox" 
@@ -156,7 +156,7 @@ function PaperItem(
                                          category.map((fos) => (
                                     <li key={fos}>{fos}</li>
                                 ))
-                                ): (<p>無分類</p>)}
+                                ): (<p>No Class</p>)}
                                 </ul>
                             </label>
                         </label>
@@ -166,7 +166,7 @@ function PaperItem(
                         <label 
                             htmlFor={`authors${paperId}`}  
                             className="badge badge-primary modal-button cursor-pointer">
-                                作者
+                                Author
                         </label>
                         <input 
                             type="checkbox" 
@@ -185,7 +185,7 @@ function PaperItem(
                                         authors.map((author, index) => (
                                             <li key={index}>{author.name}</li>
                                         ))
-                                    ): ( <p>找無作者</p>)} 
+                                    ): ( <p>No Author</p>)} 
                                 </ul>
                             </label>
                         </label>
@@ -197,7 +197,7 @@ function PaperItem(
                             to={`/paper/${paperId}`}
                             state={{ index: index}}
                             >
-                            <span className='badge badge-lg'> 全部資料 
+                            <span className='badge badge-lg'> View All 
                             </span> 
                         </Link>
                     </div>
@@ -205,7 +205,7 @@ function PaperItem(
     
                 <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box"> 
                         <div className="collapse-title text-base">
-                            顯示摘要
+                            Abstract
                         </div>
                         <div className="collapse-content"> 
                             <p>{abstract}</p>

@@ -91,12 +91,12 @@ function Bucket() {
                     <button 
                         onClick={exportExcel} 
                         className="btn btn-primary btn-lg">
-                            轉 Excel
+                            Convert To Excel
                     </button>
                     <label
                         htmlFor={`deleteAllPapers`}
                         className="btn btn-primary btn-lg modal-button">
-                            刪除所有項目
+                            Remove All Items
                     </label>
                     <input 
                             type="checkbox" 
@@ -105,17 +105,17 @@ function Bucket() {
                     />
                     <label htmlFor={`deleteAllPapers`} className="modal cursor-pointer">
                         <label className="modal-box relative" htmlFor="">
-                            <h3 className="text-lg font-bold">您確定要刪除全部項目?</h3>
+                            <h3 className="text-lg font-bold">Are you sure to remove all the items?</h3>
                             <div className='flex flex-fow justify-around'>
                                 <div className="modal-action">
                                     <label 
                                         htmlFor={`deleteAllPapers`} 
                                         className="btn" 
                                         onClick={removeAllPapersHandler}
-                                    >確定</label>
+                                    >Confirm</label>
                                 </div> 
                                 <div className="modal-action">
-                                    <label htmlFor={`deleteAllPapers`} className="btn">取消</label>
+                                    <label htmlFor={`deleteAllPapers`} className="btn">Cancel</label>
                                 </div> 
                             </div>
                         </label>
@@ -123,7 +123,7 @@ function Bucket() {
                     <Link 
                         to='/' 
                         className='btn btn-ghost btn-outline btn-lg rounded-btn mb-3'
-                        >回上頁
+                        >Go Back
                     </Link>
                 </div>        
                 {
@@ -142,12 +142,12 @@ function Bucket() {
                                 <label 
                                     htmlFor={`content${paper._id}`}  
                                     className="badge badge-primary modal-button m-2 cursor-pointer">
-                                    檢視
+                                    View
                                 </label>
                                 <label 
                                     htmlFor={`deletion${paper._id}`}  
                                     className="badge badge-warning modal-button m-2 cursor-pointer">
-                                    刪除
+                                    Delete
                                 </label>
                             </div>
                         </div>
@@ -170,42 +170,42 @@ function Bucket() {
                                             {index+1}
                                             </span>                               
                                             <div>
-                                                篇名：{paper.title}
+                                                Title：{paper.title}
                                             </div>
                                         </li>
                                     )}  _.pluck(names3, 'name').join(', ')
                                     {paper.authors && (
-                                        <li>作者：{paper.authors.reduce((str, obj, index) => str+(index>0?", ":"")+obj.name,'')}</li>
+                                        <li>Author：{paper.authors.reduce((str, obj, index) => str+(index>0?", ":"")+obj.name,'')}</li>
                                     )}
             
                                     {paper.journal &&
                                     (paper.journal.name && 
-                                        <li key={paper.journal.name}>刊名：{paper.journal.name}</li>
+                                        <li key={paper.journal.name}>Journal：{paper.journal.name}</li>
                                     )
                                     }
                                     {paper.journal &&
                                     (paper.journal.volume && 
-                                        <li key={paper.journal.volume}>卷期：{paper.journal.volume}</li>
+                                        <li key={paper.journal.volume}>Volume：{paper.journal.volume}</li>
                                     )
                                     }
                                     {paper.journal &&
                                     (paper.journal.pages && 
-                                        <li key={paper.journal.pages}>頁次：{paper.journal.pages}</li>
+                                        <li key={paper.journal.pages}>Page：{paper.journal.pages}</li>
                                     )
                                     }                            
                                     {paper.publicationDate && (
-                                        <li>出版年月：{paper.publicationDate}</li>
+                                        <li>Publication：{paper.publicationDate}</li>
                                     )}
                                     {paper.search && (
-                                        <li>關鍵詞：{paper.search}</li>
+                                        <li>Search：{paper.search}</li>
                                     )}
                                     
                                     {paper.abstractCHT && (
-                                        <li>中文摘要：{paper.abstractCHT}</li>
+                                        <li>Abstract Chinese：{paper.abstractCHT}</li>
                                     )}
                                     
                                     {paper.abstract && (
-                                        <li>英文摘要：{paper.abstract}</li>
+                                        <li>Abstract：{paper.abstract}</li>
                                     )}
                                     {paper.url &&(
                                         <li>
@@ -213,7 +213,7 @@ function Bucket() {
                                             className="m-2 badge badge-primary"
                                             target='_blank'
                                             rel='noreferer'
-                                            >擊此開啟官方資料
+                                            >Go to the official page
                                         </a>
                                         </li>
                                     )}
@@ -228,17 +228,17 @@ function Bucket() {
                         />
                         <label htmlFor={`deletion${paper._id}`} className="modal cursor-pointer">
                             <label className="modal-box relative" htmlFor="">
-                                <h3 className="text-lg font-bold">您確定要刪除清單第 {`${index+1}`} 項目?</h3>
+                                <h3 className="text-lg font-bold">Are you sure to remove No {`${index+1}`} item?</h3>
                                 <div className='flex flex-fow justify-around'>
                                     <div className="modal-action">
                                         <label 
                                             htmlFor={`deletion${paper._id}`} 
                                             className="btn" 
                                             onClick={() =>{handleDelete(paper._id)}}
-                                        >確定</label>
+                                        >Confirm</label>
                                     </div> 
                                     <div className="modal-action">
-                                        <label htmlFor={`deletion${paper._id}`} className="btn">取消</label>
+                                        <label htmlFor={`deletion${paper._id}`} className="btn">Cancel</label>
                                     </div> 
                                 </div>
                             </label>
@@ -250,12 +250,12 @@ function Bucket() {
             </div> ) : (
                 <div>
                     <div className='alert alert-info shadow-lg mb-3'>
-                        <h2>! 清單沒有項目</h2>
+                        <h2>! No item in the inventory</h2>
                     </div>
                     <Link 
                         to='/' 
                         className='btn btn-ghost btn-outline btn-lg rounded-btn mb-3'
-                        >回上頁
+                        >Go Back
                     </Link> 
                 </div>)  
         } 

@@ -109,7 +109,7 @@ function PaperSearch() {
           <button onClick={() => {
             dispatch({type: 'CLEAR_PAPERS'})
             dispatch({type: 'CLEAR_SEARCH'})
-            }} className="btn btn-lg"> 清除結果 
+            }} className="btn btn-lg"> Clear 
           </button>
         </div>
         )}
@@ -128,7 +128,7 @@ function PaperSearch() {
                       type='text'
                       className="absolute top-0 right-0 rounded-l-none w-36 btn btn-lg"
                       >
-                        尋  找
+                        Search
                 </button>
               </div>
             </div>
@@ -138,7 +138,7 @@ function PaperSearch() {
 
       <div className='flex'>
         <div className='dropdown w-4/5'> 
-          <label tabIndex={0} className="btn m-1">篩  選</label>
+          <label tabIndex={0} className="btn m-1">Filter</label>
           <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-full list-none grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2
           ">
             {fieldsOfStudy.map(({name}, index) => {
@@ -161,7 +161,7 @@ function PaperSearch() {
         </div>
         <div>
           <div className="dropdown">
-            <label tabIndex={0} className="btn m-1">年  限</label>
+            <label tabIndex={0} className="btn m-1">Years</label>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
               <li>
                 <Box sx={{width: 200}}>
@@ -181,7 +181,7 @@ function PaperSearch() {
 
         <div>
           <div className="dropdown">
-            <label tabIndex={0} className="btn m-1">關  聯</label>
+            <label tabIndex={0} className="btn m-1">Relations</label>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
               {sortArray.map((type, index) =>{
                 return (
@@ -204,7 +204,7 @@ function PaperSearch() {
         </div>
         <div>
           <div className='dropdown'>
-            <label tabIndex={0} className="btn m-1">筆  數</label>
+            <label tabIndex={0} className="btn m-1">Display Limits</label>
               <select tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w52 select w-full max-w-xs"
                 value={limit} onChange={(e) => handleLimitOnChange(e)}>
                 <option value="100">100</option>
