@@ -24,7 +24,7 @@ function Profile() {
       <div className="container px-6">
         <h1 className='block text-4xl mb-6 text-center'>Profile</h1>
           <div>
-            <Link className='btn btn-large mt-6 text-center' to='/'>回首頁</Link>
+            <Link className='btn btn-large mt-6 text-center' to='/'>Go Back</Link>
             <ProfileInputs userInfo={userInfo}/>
           </div>
       </div>
@@ -76,7 +76,7 @@ const ProfileInputs = ({userInfo}) => {
                           type="text"
                           className="input input-bordered w-full " />
                 </label>
-                {errors.firstname && <span>只接受英文字母</span>}
+                {errors.firstname && <span>Alphabet Only</span>}
               </div>
 
               <div className="mb-4">
@@ -88,7 +88,7 @@ const ProfileInputs = ({userInfo}) => {
                           type="text"
                           className="input input-bordered w-full" />
                 </label>
-                {errors.lastname && <span>只接受英文字母</span>}
+                {errors.lastname && <span>Alphabet Only</span>}
               </div>
 
               <div className="mb-4">
@@ -100,7 +100,7 @@ const ProfileInputs = ({userInfo}) => {
                           type="text"
                           className="input input-bordered w-full" />
                 </label>
-                {errors.email && <span>E-mail格式無效</span>}
+                {errors.email && <span>E-mail is invalid</span>}
               </div>
 
               <div className="mb-4">
@@ -130,7 +130,7 @@ const ProfileInputs = ({userInfo}) => {
                             </button>
                           </span>
                 </label>
-                {errors.password && <span>密碼需至少8碼, 且需包涵大寫、小寫和數字</span>}
+                {errors.password && <span>Password is invalid, requires at lease 8, and include number or special characters</span>}
               </div>
 
               <div className="mb-4">
@@ -142,23 +142,23 @@ const ProfileInputs = ({userInfo}) => {
                           type="password"
                           className="input input-bordered w-full" />
                 </label>
-                {errors.confirmPassword && <span>確認密碼並不相同</span>}
+                {errors.confirmPassword && <span>Confirmation Password doesn't match</span>}
               </div>
             {!updateProfile.updateProfileSuccess && (
                   <div className='text-center mb-4'>
                     <button type='submit'
                             className='btn btn-large mt-6 text-center w-full'
-                      >送出
+                      >Submit
                     </button>
                   </div>
               )
             }
             </form>
-            {updateProfile.updateProfileSuccess && <span>更新成功</span>}
+            {updateProfile.updateProfileSuccess && <span>Update done!</span>}
           </div>
           <div>
-            <h3>您的ID: {_id}</h3>
-            <h3>您的權限: {isAdmin ? '管理員' : '一般使用者'}</h3>
+            <h3>Your ID: {_id}</h3>
+            <h3>Your role: {isAdmin ? 'Adminitrator' : 'User'}</h3>
             
           </div>
       </div>

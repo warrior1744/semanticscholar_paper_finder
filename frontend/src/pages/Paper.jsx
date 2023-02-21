@@ -72,12 +72,12 @@ function Paper() {
                 <Link 
                   to='/' 
                   className='btn btn-ghost btn-outline btn-lg rounded-btn mb-3'
-                  >回上頁
+                  >Go Back
                 </Link>
                 {userInfo &&
                   <div className="form-control">
                     <label className="cursor-pointer label">
-                    <span className='label-text text-base mr-2'>清單</span>
+                    <span className='label-text text-base mr-2'>Inventory</span>
                     <input type="checkbox" 
                           name={paperId}
                           id={paperId}

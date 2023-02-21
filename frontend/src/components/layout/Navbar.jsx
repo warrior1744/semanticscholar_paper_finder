@@ -40,38 +40,38 @@ function Navbar({title}) {
 
             <div className="flex-1 px-2">
                 <div className="flex justify-end gap-4">
-                    <Link to='/' className='btn btn-ghost btn-sm rounded-btn text-xl'>首頁
+                    <Link to='/' className='btn btn-ghost btn-sm rounded-btn text-xl'>Home
                     </Link>
 
                     {userInfo? (
                         <div className="dropdown">
-                            <label tabIndex={0} className="btn btn-ghost btn-sm rounded-btn text-xl">嗨  {userInfo.firstname}</label>
+                            <label tabIndex={0} className="btn btn-ghost btn-sm rounded-btn text-xl">Hi  {userInfo.firstname}</label>
                             <ul tabIndex={0}
                                 className="dropdown-content menu p-5 shadow bg-base-100 rounded-box w-52">
                                 <li>  
-                                    <Link to='/bucket' className='text-lg text-black btn btn-ghost'>清單
+                                    <Link to='/bucket' className='text-lg text-black btn btn-ghost'>Inventory
                                         <div className="badge badge-secondary">{bucketItems && (bucketItems.length)}</div>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link to='/profile' className='text-lg text-black btn btn-ghost'>個人檔案
+                                    <Link to='/profile' className='text-lg text-black btn btn-ghost'>Profile
                                     </Link>
                                 </li>
                                 <li>
                                     <button 
                                         className='text-lg text-black btn btn-ghost'
                                         onClick={logoutHandler}
-                                        >登出
+                                        >Log out
                                     </button>
                                 </li>
                             </ul>
                         </div>
                     ) : (
-                        <Link to='/login' className='btn btn-ghost btn-sm rounded-btn text-xl'>登入
+                        <Link to='/login' className='btn btn-ghost btn-sm rounded-btn text-xl'>Log In
                         </Link>
                     )}
 
-                    <Link to='/about' className='btn btn-ghost btn-sm rounded-btn text-xl'>關於
+                    <Link to='/about' className='btn btn-ghost btn-sm rounded-btn text-xl'>About
                     </Link>
                     {/* <p>{days} Days {hours}:{minutes}:{seconds}</p> */}
                 </div>

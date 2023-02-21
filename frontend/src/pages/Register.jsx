@@ -47,10 +47,10 @@ function Register() {
   return (
     <>
       <div className="container px-6">
-        <h1 className="block text-4xl mb-6 text-center">註冊</h1>
+        <h1 className="block text-4xl mb-6 text-center">Register</h1>
         {loginError && <h1>{loginError}</h1>}
         <div className="mt-6 text-center">
-          已有帳號了嗎 ? <Link to={`/login`}>登入</Link>
+          Already have an account ? <Link to={`/login`}>Login</Link>
         </div>
         <div>
           <div className="mt-6 gap-6 mb-4 flex flex-col justify-center items-center">
@@ -68,7 +68,7 @@ function Register() {
                       className="input input-bordered w-full "
                     />
                   </label>
-                  {errors.firstname && <span>只接受英文字母</span>}
+                  {errors.firstname && <span>Alphabet only</span>}
                 </div>
 
                 <div className="mb-4">
@@ -83,7 +83,7 @@ function Register() {
                       className="input input-bordered w-full"
                     />
                   </label>
-                  {errors.lastname && <span>只接受英文字母</span>}
+                  {errors.lastname && <span>Alphabet only</span>}
                 </div>
 
                 <div className="mb-4">
@@ -99,8 +99,8 @@ function Register() {
                       className="input input-bordered w-full"
                     />
                   </label>
-                  {errors.email && <span>E-mail格式無效</span>}
-                  {registerError && <span>E-mail 已存在</span>}
+                  {errors.email && <span>E-mail is not valid</span>}
+                  {registerError && <span>E-mail already exists</span>}
                 </div>
 
                 <div className="mb-4">
@@ -116,7 +116,7 @@ function Register() {
                     />
                   </label>
                   {errors.password && (
-                    <span>密碼需至少8碼, 且需包涵大寫、小寫和數字</span>
+                    <span>at least 8 characters, needs include Alphabet, number and special characters</span>
                   )}
                 </div>
 
@@ -132,14 +132,14 @@ function Register() {
                       className="input input-bordered w-full"
                     />
                   </label>
-                  {errors.confirmPassword && <span>確認密碼並不相同</span>}
+                  {errors.confirmPassword && <span>Confirmation Password doesn't match</span>}
                 </div>
 
                 <button
                   type="submit"
                   className="btn btn-large mt-6 text-center"
                 >
-                  送出
+                  Submit
                 </button>
               </form>
             </div>

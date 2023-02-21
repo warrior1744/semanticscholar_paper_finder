@@ -23,10 +23,10 @@ function Login() {
   return (
     <>
     <div className="container px-6">
-      <h1 className='block text-4xl mb-6 text-center'>登入</h1>
+      <h1 className='block text-4xl mb-6 text-center'>Log In</h1>
       <div className='mt-6 text-center'>
-            還沒有帳號嗎 ? <Link to={redirect? `/register?redirect=${redirect}`: '/register'}>
-            註冊
+            Don't have an account ? <Link to={redirect? `/register?redirect=${redirect}`: '/register'}>
+            Register
           </Link>
       </div>
       <div>
@@ -62,7 +62,7 @@ const LoginInputs = ({redirect, loginError}) => {
                       defaultValue="john@example.com"
                       className="input input-bordered w-full" />
               </label>
-              {errors.email && <span>E-mail格式無效</span>}
+              {errors.email && <span>E-mail is invalid</span>}
             </div>
             
             <div className="mb-4">
@@ -74,10 +74,10 @@ const LoginInputs = ({redirect, loginError}) => {
                       type="password" 
                       className="input input-bordered w-full" />
               </label>
-              {errors.password && <span>請輸入密碼</span>}
+              {errors.password && <span>Password is required</span>}
             </div>
             {loginError && <h1>{loginError}</h1>}
-            <button type='submit' className='btn btn-large mt-6'>送出</button>
+            <button type='submit' className='btn btn-large mt-6'>Submit</button>
           </form>  
         </div>   
     </div>
