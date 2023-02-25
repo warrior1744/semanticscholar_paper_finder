@@ -100,8 +100,8 @@ function Bucket() {
   return (
     <>
       {bucketItems.length > 0 ? (
-        <div>
-          <div className="flex gap-6">
+        <div className="container mx-auto">
+          <div className="flex gap-6 flex-col sm:flex-row">
             <button onClick={exportExcel} className="btn btn-primary btn-lg">
               Convert To Excel
             </button>
